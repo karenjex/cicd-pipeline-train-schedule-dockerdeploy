@@ -1,4 +1,4 @@
-pipeline {
+ppipeline {
     agent any
     stages {
         stage('Build') {
@@ -8,8 +8,7 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('BuildDockerImage') {
-            {
+        stage('Build Docker Image') {
             when {
                 branch 'master'
             }
@@ -19,10 +18,10 @@ pipeline {
                     app.inside {
                         sh 'echo $(curl localhost:8080)'
                     }
+                }
             }
         }
-        stage('PushDockerImage') {
-            {
+        stage('Push Docker Image') {
             when {
                 branch 'master'
             }
@@ -36,7 +35,6 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-            {
             when {
                 branch 'master'
             }
